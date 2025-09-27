@@ -56,7 +56,7 @@ export default function RecentNotes() {
   useEffect(() => {
     const fetchRecentNotes = async () => {
       try {
-        const response = await fetch("/api/recent-notes.json");
+        const response = await fetch("./api/recent-notes.json");
         if (response.ok) {
           const notes = await response.json();
           // Format the dates for display
