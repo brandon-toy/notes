@@ -22,3 +22,8 @@ blockquote cite {
   display: block;
   margin-top: 0.5rem;
 }
+
+/* Make h3 headings smaller using Starlight's CSS custom properties */
+:root {
+  --sl-text-h3: 1.1rem;
+}

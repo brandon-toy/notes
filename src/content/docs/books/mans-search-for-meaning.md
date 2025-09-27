@@ -5,7 +5,7 @@ description: "wow"
 
 ## Quick quotes and reflections
 
-> "The angels are lost in perpetual contemplation of an infinite glory"
+> ### "The angels are lost in perpetual contemplation of an infinite glory"
 
 Context surrounding this is how important love is as a goal for humanity. How the author understtood at a moment of cruelty that love "is the ultimate and the highest goal to which man can aspire."
 
@@ -17,13 +17,26 @@ I decided to keep going, my idiotic brain was kind of excited for the challenge.
 
 The author shares a similar experience when looking at the sun on a super harsh day and in that moment, all the pain and all the suffering around him. Basically being in hell. It didn't matter, this love and memory transcended all of those. I can say that I can relate and that is super cool, but I still can't understand this quote.
 
-> "No man should judge unless he asks himself in absolute honesty whether in a similar siutation he might not have done the same."
+> ### "No man should judge unless he asks himself in absolute honesty whether in a similar siutation he might not have done the same."
 
 Context:
 
 In the camps the prisoners clearly held favourites and poured soup for each other. The soup was not very nutrituous and all the peas were in the bottom of the soup bowl. Volunteers when pouring soup would give the peas to the people they knew. People started to get reputations of people who favoured certain people.
 
 Reflection:
+
 Judgement is such an interesting topic. It feels like pressure almost, judgement. It feels easy, to judge to walk by and live life like that. But the author kind of just like blew me away when I first read this. The first gut reaction was like thats not ok. But really thinking about it, I would totally do the same. Is it fair for me to pass on things like that to other people, when in the same position I would def do the same - favour my friends and close ones. This quote is a good reminder to me to always not do the right thing, but to find the intention of my judgement and to be more empathic to other people.
 
 I can't say I ever pass judgement on to people and idk. The most recent one on the mind is how dirty my working space is. Well not dirty but, mess here and there and how I am not being a good bf. Like basically all things, never "good" and "bad", but these judgements are my intention to have a clean and healthy space for me to live in and I am glad I have this mechanism to do this! Just feels that this emotion/way of living is something that can quickly go overboard.
+
+> ### "[T]he last of the human freedoms - to choose one's attitude in any given set of circumstances, to choose one's own way."
+
+Context:
+
+People who live in the camps remember the kind acts of other men. Men who would give their last piece of bread (I think they only had like a couple pieces a day).  
+
+Reflection:
+
+Really spoke to me because I feel like I have heard so many people say that they are trapped. I remember hearing about Google engineers and how some of them feel like they are just trapped. In the grand scheme of things, objectively, they are probably the most free people to ever exist. Millionares, but they feel trapped. I thought it was super interesting that in the face of a country doing everything possible to make humans feel like they have no choice but to work, people and humanity still finds ways to give and choices to make.
+
+This mindset of being trapped is something I also feel like at Amazon. Feeling like I am trapped to by some dollar amount to reach some goal. It does feel like there is no alternative but I do know the state of privelage I am in. My goal of retiring early feels in reach but also out of. Like so many things need to go right for it to happen. Like trapped by society and every problem and every mistake I make in work is kind of amplified. Not currently sure what to do, but I would like my brain to take everything as a learning experience and one thing that really helped me was watching Dr. K and him being like, everything that happens in our life is something to help us get somewhere. A loss of my job is a pathway to the next experience, maybe it won't even be in tech! Its scary to think about but also, that is also a good thing then!
