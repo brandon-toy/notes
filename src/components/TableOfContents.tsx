@@ -44,10 +44,17 @@ export default function TableOfContents() {
     const contentItems: ContentItem[] = [
       {
         title: "Man's Search for Meaning",
-        slug: "/books/mans-search-for-meaning/",
+        slug: "./books/mans-search-for-meaning/",
         type: "book",
         description:
           "Notes and insights from Viktor Frankl's seminal work on finding purpose in life.",
+      },
+      {
+        title: "Hollow Knight Silksong",
+        slug: "./games/silksong/",
+        type: "note",
+        description:
+          "Notes and thoughts about the highly anticipated sequel to Hollow Knight.",
       },
       // Add more items here as you add them to your sidebar
     ];

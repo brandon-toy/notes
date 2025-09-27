@@ -39,7 +39,7 @@ export const GET: APIRoute = async () => {
               console.log(`Found file: ${filePath}, modified: ${stats.mtime}`);
               return {
                 title: doc.data.title,
-                slug: `/${doc.id}/`,
+                slug: `./${doc.id}/`,
                 lastModified: stats.mtime.toISOString(),
                 description: doc.data.description,
                 type: doc.id.startsWith("books/") ? "book" : "note",
