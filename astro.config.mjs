@@ -10,7 +10,7 @@ export default defineConfig({
   base: process.env.NODE_ENV === "production" ? "/notes" : undefined,
   integrations: [
     starlight({
-      title: "My Docs",
+      title: "Home",
       social: [
         {
           icon: "github",
@@ -20,6 +20,10 @@ export default defineConfig({
       ],
       customCss: ["./src/styles/global.css"],
       sidebar: [
+        {
+          label: "Table of Contents",
+          slug: "contents",
+        },
         {
           label: "Books",
           items: [
@@ -33,7 +37,7 @@ export default defineConfig({
           label: "Games",
           items: [
             {
-              label: "Hollow Knight Silksong",
+              label: "Silksong",
               slug: "games/silksong",
             },
           ],

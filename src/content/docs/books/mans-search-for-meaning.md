@@ -1,6 +1,6 @@
 ---
 title: Man's Search for Meaning
-description: Notes and insights from Viktor Frankl's seminal work on finding purpose in life.
+description: "wow"
 ---
 
 ## Quick quotes and reflections

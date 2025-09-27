@@ -81,21 +81,21 @@ export default function RecentNotes() {
       <h2>Recently Updated</h2>
       <div className="notes-grid">
         {recentNotes.map((note) => (
-          <div key={note.slug} className="note-card">
-            <div className="note-header">
-              <div className="note-icon">
-                {note.type === "book" ? <BookIcon /> : <NoteIcon />}
+          <a key={note.slug} href={note.slug} className="note-card-link">
+            <div className="note-card">
+              <div className="note-header">
+                <div className="note-icon">
+                  {note.type === "book" ? <BookIcon /> : <NoteIcon />}
+                </div>
+                <h3>{note.title}</h3>
               </div>
-              <h3>
-                <a href={note.slug}>{note.title}</a>
-              </h3>
+
+              <div className="last-modified">
+                <ClockIcon />
+                <span>Updated: {note.lastModified}</span>
+              </div>
             </div>
-            <p className="description">{note.description}</p>
-            <div className="last-modified">
-              <ClockIcon />
-              <span>Updated: {note.lastModified}</span>
-            </div>
-          </div>
+          </a>
         ))}
       </div>
 
@@ -117,15 +117,22 @@ export default function RecentNotes() {
           margin-top: 1rem;
         }
 
+        .note-card-link {
+          text-decoration: none;
+          color: inherit;
+          display: block;
+        }
+
         .note-card {
           padding: 1.25rem;
           background: var(--sl-color-bg);
           border-radius: 0.5rem;
           border: 1px solid var(--sl-color-gray-6);
           transition: all 0.2s ease;
+          cursor: pointer;
         }
 
-        .note-card:hover {
+        .note-card-link:hover .note-card {
           border-color: var(--sl-color-accent);
           transform: translateY(-2px);
           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -133,29 +140,30 @@ export default function RecentNotes() {
 
         .note-header {
           display: flex;
-          align-items: center;
+          align-items: flex-start;
           gap: 0.75rem;
           margin-bottom: 0.75rem;
         }
 
         .note-icon {
           color: var(--sl-color-accent);
-          display: flex;
-          align-items: center;
+          display: block;
+          flex-shrink: 0;
+          margin-top: 2px;
         }
 
         .note-card h3 {
           margin: 0;
           font-size: 1.1rem;
           flex: 1;
+          line-height: 1.3;
         }
 
-        .note-card a {
+        .note-card h3 {
           color: var(--sl-color-white);
-          text-decoration: none;
         }
 
-        .note-card a:hover {
+        .note-card-link:hover .note-card h3 {
           color: var(--sl-color-accent);
         }
 
