@@ -10,8 +10,13 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/react": "^4.4.0",
     "@astrojs/starlight": "^0.36.0",
+    "@types/react": "^19.1.14",
+    "@types/react-dom": "^19.1.9",
     "astro": "^5.6.1",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
     "sharp": "^0.34.2"
   }
 }

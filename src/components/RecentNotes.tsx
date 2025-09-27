@@ -1,0 +1,182 @@
+import { useState, useEffect } from "react";
+
+interface Note {
+  title: string;
+  slug: string;
+  lastModified: string;
+  description?: string;
+  type: "book" | "note";
+}
+
+const BookIcon = () => (
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+  >
+    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+  </svg>
+);
+
+const NoteIcon = () => (
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+  >
+    <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+    <polyline points="14,2 14,8 20,8" />
+  </svg>
+);
+
+const ClockIcon = () => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+  >
+    <circle cx="12" cy="12" r="10" />
+    <polyline points="12,6 12,12 16,14" />
+  </svg>
+);
+
+export default function RecentNotes() {
+  const [recentNotes, setRecentNotes] = useState<Note[]>([]);
+
+  useEffect(() => {
+    // This would typically fetch from your content collection
+    // For now, we'll use mock data that you can replace with actual content
+    const mockNotes: Note[] = [
+      {
+        title: "Man's Search for Meaning",
+        slug: "/books/mans-search-for-meaning/",
+        lastModified: new Date().toLocaleDateString(),
+        description: "Notes and insights from Viktor Frankl's work",
+        type: "book",
+      },
+      {
+        title: "Notes",
+        slug: "/guides/notes/",
+        lastModified: new Date(Date.now() - 86400000).toLocaleDateString(), // Yesterday
+        description: "Personal notes and thoughts",
+        type: "note",
+      },
+    ];
+
+    setRecentNotes(mockNotes.slice(0, 2));
+  }, []);
+
+  return (
+    <div className="recent-notes">
+      <h2>Recently Updated</h2>
+      <div className="notes-grid">
+        {recentNotes.map((note) => (
+          <div key={note.slug} className="note-card">
+            <div className="note-header">
+              <div className="note-icon">
+                {note.type === "book" ? <BookIcon /> : <NoteIcon />}
+              </div>
+              <h3>
+                <a href={note.slug}>{note.title}</a>
+              </h3>
+            </div>
+            <p className="description">{note.description}</p>
+            <div className="last-modified">
+              <ClockIcon />
+              <span>Updated: {note.lastModified}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+        .recent-notes {
+          margin: 2rem 0;
+          padding: 1.5rem;
+          background: var(--sl-color-bg-nav);
+          border-radius: 0.5rem;
+          border: 1px solid var(--sl-color-gray-5);
+        }
+
+        .notes-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+          gap: 1rem;
+          margin-top: 1rem;
+        }
+
+        .note-card {
+          padding: 1.25rem;
+          background: var(--sl-color-bg);
+          border-radius: 0.5rem;
+          border: 1px solid var(--sl-color-gray-6);
+          transition: all 0.2s ease;
+        }
+
+        .note-card:hover {
+          border-color: var(--sl-color-accent);
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .note-header {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          margin-bottom: 0.75rem;
+        }
+
+        .note-icon {
+          color: var(--sl-color-accent);
+          display: flex;
+          align-items: center;
+        }
+
+        .note-card h3 {
+          margin: 0;
+          font-size: 1.1rem;
+          flex: 1;
+        }
+
+        .note-card a {
+          color: var(--sl-color-white);
+          text-decoration: none;
+        }
+
+        .note-card a:hover {
+          color: var(--sl-color-accent);
+        }
+
+        .description {
+          margin: 0 0 1rem 0;
+          color: var(--sl-color-gray-2);
+          font-size: 0.9rem;
+          line-height: 1.4;
+        }
+
+        .last-modified {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          margin: 0;
+          color: var(--sl-color-gray-3);
+          font-size: 0.8rem;
+        }
+      `,
+        }}
+      />
+    </div>
+  );
+}
