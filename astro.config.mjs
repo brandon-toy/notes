@@ -7,7 +7,7 @@ import react from "@astrojs/react";
 // https://astro.build/config
 export default defineConfig({
   site: "https://brandon-toy.github.io",
-  base: process.env.NODE_ENV === "production" ? "/guides" : undefined,
+  base: process.env.NODE_ENV === "production" ? "/notes" : undefined,
   integrations: [
     starlight({
       title: "My Docs",
