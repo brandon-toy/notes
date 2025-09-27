@@ -1,0 +1,24 @@
+/* Custom quote styling */
+blockquote {
+  font-style: italic !important;
+  color: var(--sl-color-gray-2) !important;
+  opacity: 0.8;
+  border-left: 3px solid var(--sl-color-accent);
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  font-weight: 300;
+}
+
+blockquote p {
+  font-style: italic;
+  color: inherit;
+}
+
+/* Optional: Make the quote attribution (if any) normal weight */
+blockquote cite {
+  font-style: normal;
+  font-weight: 400;
+  opacity: 0.7;
+  display: block;
+  margin-top: 0.5rem;
+}

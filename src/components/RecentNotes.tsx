@@ -54,26 +54,26 @@ export default function RecentNotes() {
   const [recentNotes, setRecentNotes] = useState<Note[]>([]);
 
   useEffect(() => {
-    // This would typically fetch from your content collection
-    // For now, we'll use mock data that you can replace with actual content
-    const mockNotes: Note[] = [
-      {
-        title: "Man's Search for Meaning",
-        slug: "/books/mans-search-for-meaning/",
-        lastModified: new Date().toLocaleDateString(),
-        description: "Notes and insights from Viktor Frankl's work",
-        type: "book",
-      },
-      {
-        title: "Notes",
-        slug: "/guides/notes/",
-        lastModified: new Date(Date.now() - 86400000).toLocaleDateString(), // Yesterday
-        description: "Personal notes and thoughts",
-        type: "note",
-      },
-    ];
+    const fetchRecentNotes = async () => {
+      try {
+        const response = await fetch("/api/recent-notes.json");
+        if (response.ok) {
+          const notes = await response.json();
+          // Format the dates for display
+          const formattedNotes = notes.map((note: any) => ({
+            ...note,
+            lastModified: new Date(note.lastModified).toLocaleDateString(),
+          }));
+          setRecentNotes(formattedNotes);
+        } else {
+          console.error("Failed to fetch recent notes");
+        }
+      } catch (error) {
+        console.error("Error fetching recent notes:", error);
+      }
+    };
 
-    setRecentNotes(mockNotes.slice(0, 2));
+    fetchRecentNotes();
   }, []);
 
   return (

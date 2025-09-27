@@ -18,6 +18,7 @@ export default defineConfig({
           href: "https://github.com/withastro/starlight",
         },
       ],
+      customCss: ["./src/styles/global.css"],
       sidebar: [
         {
           label: "Books",
@@ -29,11 +30,11 @@ export default defineConfig({
           ],
         },
         {
-          label: "Guides",
+          label: "Games",
           items: [
             {
-              label: "Notes",
-              slug: "guides/notes",
+              label: "Hollow Knight Silksong",
+              slug: "games/silksong",
             },
           ],
         },
