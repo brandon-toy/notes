@@ -2,6 +2,10 @@ import type { APIRoute } from "astro";
 import { getCollection } from "astro:content";
 import fs from "fs";
 import path from "path";
+import {
+  getContentSlug,
+  shouldExcludeFromContentList,
+} from "../../utils/paths";
 
 export const GET: APIRoute = async () => {
   try {
@@ -11,24 +15,26 @@ export const GET: APIRoute = async () => {
     // Debug: log what we're getting
     console.log(
       "All docs:",
-      allDocs.map((doc) => ({ id: doc.id, slug: doc.slug }))
+      allDocs.map((doc) => ({ id: doc.id, slug: getContentSlug(doc) }))
     );
 
-    // Filter out index and contents pages (note: IDs don't include extensions)
+    // Filter out index and contents pages using utility
     const contentDocs = allDocs.filter(
-      (doc) => doc.id !== "index" && doc.id !== "contents"
+      (doc) => !shouldExcludeFromContentList(getContentSlug(doc))
     );
 
     console.log(
       "Filtered docs:",
-      contentDocs.map((doc) => ({ id: doc.id, slug: doc.slug }))
+      contentDocs.map((doc) => ({ id: doc.id, slug: getContentSlug(doc) }))
     );
 
     // Get file stats for each document
     const docsWithStats = await Promise.all(
       contentDocs.map(async (doc) => {
+        const slug = getContentSlug(doc);
+
         // Try different file extensions since the collection ID doesn't include them
-        const basePath = path.join(process.cwd(), "src/content/docs", doc.id);
+        const basePath = path.join(process.cwd(), "src/content/docs", slug);
         const possiblePaths = [basePath + ".md", basePath + ".mdx"];
 
         for (const filePath of possiblePaths) {
@@ -39,10 +45,9 @@ export const GET: APIRoute = async () => {
               console.log(`Found file: ${filePath}, modified: ${stats.mtime}`);
               return {
                 title: doc.data.title,
-                slug: `./${doc.id}/`,
+                slug: `./${slug}/`,
                 lastModified: stats.mtime.toISOString(),
                 description: doc.data.description,
-                type: doc.id.startsWith("books/") ? "book" : "note",
               };
             }
           } catch (error) {

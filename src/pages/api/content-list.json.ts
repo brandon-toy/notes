@@ -1,5 +1,9 @@
 import type { APIRoute } from "astro";
 import { getCollection } from "astro:content";
+import {
+  getContentSlug,
+  shouldExcludeFromContentList,
+} from "../../utils/paths";
 
 export const GET: APIRoute = async () => {
   try {
@@ -7,8 +11,7 @@ export const GET: APIRoute = async () => {
     console.log("Docs found:", docs.length);
     docs.forEach((doc, index) => {
       console.log(`Doc ${index}:`, {
-        slug: doc.slug,
-        id: doc.id,
+        slug: getContentSlug(doc),
         title: doc.data.title,
         collection: doc.collection,
       });
@@ -16,26 +19,15 @@ export const GET: APIRoute = async () => {
 
     const contentItems = docs
       .filter((doc) => {
-        const identifier = doc.slug || doc.id;
-        return (
-          identifier && identifier !== "index" && identifier !== "contents"
-        );
-      }) // Exclude index and contents pages, and ensure identifier exists
+        const slug = getContentSlug(doc);
+        return !shouldExcludeFromContentList(slug);
+      })
       .map((doc) => {
-        const identifier = doc.slug || doc.id;
-
-        // Determine content type based on the identifier path
-        let type: "book" | "note" | "guide" = "note";
-        if (identifier && identifier.startsWith("books/")) {
-          type = "book";
-        } else if (identifier && identifier.startsWith("guides/")) {
-          type = "guide";
-        }
+        const slug = getContentSlug(doc);
 
         return {
           title: doc.data.title || "Untitled",
-          slug: identifier || "",
-          type,
+          slug,
           description: doc.data.description || undefined,
         };
       });

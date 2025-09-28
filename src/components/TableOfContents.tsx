@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import Spinner from "./Spinner";
+import { buildApiUrl } from "../utils/paths";
 
 interface ContentItem {
   title: string;
   slug: string;
-  type: "book" | "note" | "guide";
   description?: string;
 }
 
@@ -45,15 +45,21 @@ export default function TableOfContents() {
     const fetchContent = async () => {
       try {
         setLoading(true);
-        const response = await fetch(
-          `${import.meta.env.BASE_URL || "/"}api/content-list.json`
-        );
+        const apiUrl = buildApiUrl("api/content-list.json");
+
+        console.log("Fetching from:", apiUrl);
+
+        const response = await fetch(apiUrl);
+        console.log("Response status:", response.status);
+
         if (response.ok) {
           const contentItems: ContentItem[] = await response.json();
           setContents(contentItems);
           setError(null);
         } else {
-          setError("Failed to fetch content list");
+          const errorText = await response.text();
+          console.error("Response error:", errorText);
+          setError(`Failed to fetch content list (${response.status})`);
         }
       } catch (error) {
         setError("Error fetching content");
@@ -66,34 +72,11 @@ export default function TableOfContents() {
     fetchContent();
   }, []);
 
-  const groupedContent = contents.reduce((acc, item) => {
-    if (!acc[item.type]) {
-      acc[item.type] = [];
+  const getIcon = (slug: string) => {
+    if (slug.startsWith("books/")) {
+      return <BookIcon />;
     }
-    acc[item.type].push(item);
-    return acc;
-  }, {} as Record<string, ContentItem[]>);
-
-  const getSectionTitle = (type: string) => {
-    switch (type) {
-      case "book":
-        return "Books";
-      case "note":
-        return "Notes";
-      case "guide":
-        return "Guides";
-      default:
-        return type;
-    }
-  };
-
-  const getIcon = (type: string) => {
-    switch (type) {
-      case "book":
-        return <BookIcon />;
-      default:
-        return <NoteIcon />;
-    }
+    return <NoteIcon />;
   };
 
   if (error) {
@@ -108,28 +91,22 @@ export default function TableOfContents() {
 
   return (
     <div className="table-of-contents">
-      {Object.entries(groupedContent).map(([type, items]) => (
-        <section key={type} className="content-section">
-          <h2 className="section-title">{getSectionTitle(type)}</h2>
-          <div className="content-grid">
-            {items.map((item) => (
-              <a
-                key={item.slug}
-                href={`/${item.slug}/`}
-                className="content-card"
-              >
-                <div className="card-header">
-                  <div className="card-icon">{getIcon(item.type)}</div>
-                  <h3>{item.title}</h3>
-                </div>
-                {item.description && (
-                  <p className="card-description">{item.description}</p>
-                )}
-              </a>
-            ))}
-          </div>
-        </section>
-      ))}
+      <section className="content-section">
+        <h2 className="section-title">All Content</h2>
+        <div className="content-grid">
+          {contents.map((item) => (
+            <a key={item.slug} href={`/${item.slug}/`} className="content-card">
+              <div className="card-header">
+                <div className="card-icon">{getIcon(item.slug)}</div>
+                <h3>{item.title}</h3>
+              </div>
+              {item.description && (
+                <p className="card-description">{item.description}</p>
+              )}
+            </a>
+          ))}
+        </div>
+      </section>
 
       <style
         dangerouslySetInnerHTML={{

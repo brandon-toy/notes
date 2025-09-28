@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import Spinner from "./Spinner";
+import { buildApiUrl } from "../utils/paths";
 
 interface Note {
   title: string;
   slug: string;
   lastModified: string;
   description?: string;
-  type: "book" | "note";
 }
 
 const BookIcon = () => (
@@ -59,9 +59,7 @@ export default function RecentNotes() {
     const fetchRecentNotes = async () => {
       try {
         setLoading(true);
-        const response = await fetch(
-          `${import.meta.env.BASE_URL || "/"}api/recent-notes.json`
-        );
+        const response = await fetch(buildApiUrl("api/recent-notes.json"));
         if (response.ok) {
           const notes = await response.json();
           // Format the dates for display
@@ -98,7 +96,11 @@ export default function RecentNotes() {
               <div className="note-card">
                 <div className="note-header">
                   <div className="note-icon">
-                    {note.type === "book" ? <BookIcon /> : <NoteIcon />}
+                    {note.slug.startsWith("./books/") ? (
+                      <BookIcon />
+                    ) : (
+                      <NoteIcon />
+                    )}
                   </div>
                   <h3>{note.title}</h3>
                 </div>
