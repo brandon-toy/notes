@@ -45,7 +45,9 @@ export default function TableOfContents() {
     const fetchContent = async () => {
       try {
         setLoading(true);
-        const response = await fetch("/api/content-list.json");
+        const response = await fetch(
+          `${import.meta.env.BASE_URL || "/"}api/content-list.json`
+        );
         if (response.ok) {
           const contentItems: ContentItem[] = await response.json();
           setContents(contentItems);

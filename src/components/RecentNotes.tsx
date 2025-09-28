@@ -59,7 +59,9 @@ export default function RecentNotes() {
     const fetchRecentNotes = async () => {
       try {
         setLoading(true);
-        const response = await fetch("./api/recent-notes.json");
+        const response = await fetch(
+          `${import.meta.env.BASE_URL || "/"}api/recent-notes.json`
+        );
         if (response.ok) {
           const notes = await response.json();
           // Format the dates for display
