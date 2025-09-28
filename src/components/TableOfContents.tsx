@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Spinner from "./Spinner";
 
 interface ContentItem {
   title: string;
@@ -93,22 +94,10 @@ export default function TableOfContents() {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="table-of-contents">
-        <div className="toc-header">
-          <h1>Table of Contents</h1>
-          <p>Loading content...</p>
-        </div>
-      </div>
-    );
-  }
-
   if (error) {
     return (
       <div className="table-of-contents">
         <div className="toc-header">
-          <h1>Table of Contents</h1>
           <p>Error: {error}</p>
         </div>
       </div>
@@ -117,11 +106,6 @@ export default function TableOfContents() {
 
   return (
     <div className="table-of-contents">
-      <div className="toc-header">
-        <h1>Table of Contents</h1>
-        <p>All notes and books in one place</p>
-      </div>
-
       {Object.entries(groupedContent).map(([type, items]) => (
         <section key={type} className="content-section">
           <h2 className="section-title">{getSectionTitle(type)}</h2>
@@ -165,6 +149,20 @@ export default function TableOfContents() {
         }
 
         .toc-header p {
+          margin: 0;
+          color: var(--sl-color-gray-2);
+          font-size: 1.1rem;
+        }
+
+        .loading-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 1rem;
+          margin-top: 2rem;
+        }
+
+        .loading-container p {
           margin: 0;
           color: var(--sl-color-gray-2);
           font-size: 1.1rem;

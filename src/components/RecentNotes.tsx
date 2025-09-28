@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Spinner from "./Spinner";
 
 interface Note {
   title: string;
@@ -52,10 +53,12 @@ const ClockIcon = () => (
 
 export default function RecentNotes() {
   const [recentNotes, setRecentNotes] = useState<Note[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchRecentNotes = async () => {
       try {
+        setLoading(true);
         const response = await fetch("./api/recent-notes.json");
         if (response.ok) {
           const notes = await response.json();
@@ -70,6 +73,8 @@ export default function RecentNotes() {
         }
       } catch (error) {
         console.error("Error fetching recent notes:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -79,25 +84,32 @@ export default function RecentNotes() {
   return (
     <div className="recent-notes">
       <h2>Recently Updated</h2>
-      <div className="notes-grid">
-        {recentNotes.map((note) => (
-          <a key={note.slug} href={note.slug} className="note-card-link">
-            <div className="note-card">
-              <div className="note-header">
-                <div className="note-icon">
-                  {note.type === "book" ? <BookIcon /> : <NoteIcon />}
+      {loading ? (
+        <div className="loading-container">
+          <Spinner size={24} />
+          <span>Loading recent notes...</span>
+        </div>
+      ) : (
+        <div className="notes-grid">
+          {recentNotes.map((note) => (
+            <a key={note.slug} href={note.slug} className="note-card-link">
+              <div className="note-card">
+                <div className="note-header">
+                  <div className="note-icon">
+                    {note.type === "book" ? <BookIcon /> : <NoteIcon />}
+                  </div>
+                  <h3>{note.title}</h3>
                 </div>
-                <h3>{note.title}</h3>
-              </div>
 
-              <div className="last-modified">
-                <ClockIcon />
-                <span>Updated: {note.lastModified}</span>
+                <div className="last-modified">
+                  <ClockIcon />
+                  <span>Updated: {note.lastModified}</span>
+                </div>
               </div>
-            </div>
-          </a>
-        ))}
-      </div>
+            </a>
+          ))}
+        </div>
+      )}
 
       <style
         dangerouslySetInnerHTML={{
@@ -181,6 +193,16 @@ export default function RecentNotes() {
           margin: 0;
           color: var(--sl-color-gray-3);
           font-size: 0.8rem;
+        }
+
+        .loading-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 0.75rem;
+          padding: 2rem;
+          color: var(--sl-color-gray-2);
+          font-size: 0.9rem;
         }
       `,
         }}
