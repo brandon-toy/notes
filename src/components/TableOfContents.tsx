@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Spinner from "./Spinner";
-import { buildApiUrl } from "../utils/paths";
+import { buildApiUrl, buildContentUrl } from "../utils/paths";
 
 interface ContentItem {
   title: string;
@@ -95,7 +95,11 @@ export default function TableOfContents() {
         <h2 className="section-title">All Content</h2>
         <div className="content-grid">
           {contents.map((item) => (
-            <a key={item.slug} href={`/${item.slug}/`} className="content-card">
+            <a
+              key={item.slug}
+              href={buildContentUrl(item.slug)}
+              className="content-card"
+            >
               <div className="card-header">
                 <div className="card-icon">{getIcon(item.slug)}</div>
                 <h3>{item.title}</h3>

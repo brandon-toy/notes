@@ -57,3 +57,24 @@ export function shouldExcludeFromContentList(slug: string): boolean {
   const excludedSlugs = ["index", "contents"];
   return excludedSlugs.includes(slug) || !slug;
 }
+
+/**
+ * Build a content URL with proper base path handling
+ * For linking to content pages in the site
+ */
+export function buildContentUrl(slug: string, baseUrl?: string): string {
+  const base =
+    baseUrl ||
+    (typeof import.meta !== "undefined" ? import.meta.env.BASE_URL : "") ||
+    "/";
+
+  // Ensure slug doesn't start with a slash
+  const cleanSlug = slug.startsWith("/") ? slug.slice(1) : slug;
+
+  // Handle base URL ending and add trailing slash for content URLs
+  if (base.endsWith("/")) {
+    return `${base}${cleanSlug}/`;
+  } else {
+    return `${base}/${cleanSlug}/`;
+  }
+}
