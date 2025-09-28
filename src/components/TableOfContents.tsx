@@ -37,29 +37,30 @@ const NoteIcon = () => (
 
 export default function TableOfContents() {
   const [contents, setContents] = useState<ContentItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // This dynamically reflects your sidebar content
-    // In a real implementation, this would read from your content collection
-    const contentItems: ContentItem[] = [
-      {
-        title: "Man's Search for Meaning",
-        slug: "../books/mans-search-for-meaning/",
-        type: "book",
-        description:
-          "Notes and insights from Viktor Frankl's seminal work on finding purpose in life.",
-      },
-      {
-        title: "Hollow Knight Silksong",
-        slug: "../games/silksong/",
-        type: "note",
-        description:
-          "Notes and thoughts about the highly anticipated sequel to Hollow Knight.",
-      },
-      // Add more items here as you add them to your sidebar
-    ];
+    const fetchContent = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch("/api/content-list.json");
+        if (response.ok) {
+          const contentItems: ContentItem[] = await response.json();
+          setContents(contentItems);
+          setError(null);
+        } else {
+          setError("Failed to fetch content list");
+        }
+      } catch (error) {
+        setError("Error fetching content");
+        console.error("Error fetching content:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    setContents(contentItems);
+    fetchContent();
   }, []);
 
   const groupedContent = contents.reduce((acc, item) => {
@@ -92,14 +93,45 @@ export default function TableOfContents() {
     }
   };
 
+  if (loading) {
+    return (
+      <div className="table-of-contents">
+        <div className="toc-header">
+          <h1>Table of Contents</h1>
+          <p>Loading content...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="table-of-contents">
+        <div className="toc-header">
+          <h1>Table of Contents</h1>
+          <p>Error: {error}</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="table-of-contents">
+      <div className="toc-header">
+        <h1>Table of Contents</h1>
+        <p>All notes and books in one place</p>
+      </div>
+
       {Object.entries(groupedContent).map(([type, items]) => (
         <section key={type} className="content-section">
           <h2 className="section-title">{getSectionTitle(type)}</h2>
           <div className="content-grid">
             {items.map((item) => (
-              <a key={item.slug} href={item.slug} className="content-card">
+              <a
+                key={item.slug}
+                href={`/${item.slug}/`}
+                className="content-card"
+              >
                 <div className="card-header">
                   <div className="card-icon">{getIcon(item.type)}</div>
                   <h3>{item.title}</h3>
