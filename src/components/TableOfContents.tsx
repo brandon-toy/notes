@@ -94,27 +94,20 @@ export default function TableOfContents() {
 
   return (
     <div className="table-of-contents">
-      <div className="toc-header">
-        <h1>Table of Contents</h1>
-        <p>All notes and books in one place</p>
-      </div>
-
       {Object.entries(groupedContent).map(([type, items]) => (
         <section key={type} className="content-section">
           <h2 className="section-title">{getSectionTitle(type)}</h2>
           <div className="content-grid">
             {items.map((item) => (
-              <div key={item.slug} className="content-card">
+              <a key={item.slug} href={item.slug} className="content-card">
                 <div className="card-header">
                   <div className="card-icon">{getIcon(item.type)}</div>
-                  <h3>
-                    <a href={item.slug}>{item.title}</a>
-                  </h3>
+                  <h3>{item.title}</h3>
                 </div>
                 {item.description && (
                   <p className="card-description">{item.description}</p>
                 )}
-              </div>
+              </a>
             ))}
           </div>
         </section>
@@ -164,11 +157,15 @@ export default function TableOfContents() {
         }
 
         .content-card {
+          display: block;
           padding: 1.5rem;
           background: var(--sl-color-bg-nav);
           border-radius: 0.5rem;
           border: 1px solid var(--sl-color-gray-6);
           transition: all 0.2s ease;
+          text-decoration: none;
+          color: inherit;
+          cursor: pointer;
         }
 
         .content-card:hover {
@@ -194,14 +191,11 @@ export default function TableOfContents() {
           margin: 0;
           font-size: 1.2rem;
           flex: 1;
-        }
-
-        .content-card a {
           color: var(--sl-color-white);
-          text-decoration: none;
+          transition: color 0.2s ease;
         }
 
-        .content-card a:hover {
+        .content-card:hover h3 {
           color: var(--sl-color-accent);
         }
 
