@@ -11,11 +11,12 @@ export default defineConfig({
   integrations: [
     starlight({
       title: "Home",
+      lastUpdated: true,
       social: [
         {
           icon: "github",
           label: "GitHub",
-          href: "https://github.com/withastro/starlight",
+          href: "https://github.com/brandon-toy/notes",
         },
       ],
       customCss: ["./src/styles/global.css"],
