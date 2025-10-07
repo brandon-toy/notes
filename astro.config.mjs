@@ -35,6 +35,19 @@ export default defineConfig({
           ],
         },
         {
+          label: "Australia",
+          items: [
+            {
+            label: "Day 1!",
+            slug: "australia/video-idea-1",
+            }, 
+            {
+            label: "Day 2!",
+            slug: "australia/video-idea-2"
+          }
+        ]
+        },
+        {
           label: "Games",
           items: [
             {
